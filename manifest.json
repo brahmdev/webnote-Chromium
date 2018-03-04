@@ -1,0 +1,13 @@
+{
+
+  "manifest_version": 2,
+  "name": "WebNote",
+  "description": "Displays a popup where you can add notes for your web pages",
+  "version": "1.0",
+  "permissions": ["storage", "tabs"],
+  "browser_action": {
+    "default_icon": "icons/webnote.png",
+    "default_title": "Take a Note",
+    "default_popup": "popup/panel.html"
+  }
+}
