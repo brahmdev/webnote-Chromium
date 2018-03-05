@@ -17,9 +17,8 @@ p {
 }
 
 #content {
-  height: 89%;
-  width: 420px;
-  margin: 2em 2em 0 2em;
+  height: 170px;
+  width: 100%;
   border: .5em solid #DDE4E9;
   transition: background-color .2s ease-out;
 }
@@ -31,4 +30,8 @@ p {
 
 [contenteditable]:focus {
   outline: 0px solid transparent;
+}
+
+.nav {
+    background-color: #f8f9fa!important;
 }
