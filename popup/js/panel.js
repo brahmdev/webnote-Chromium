@@ -1,27 +1,9 @@
 var myWindowId;
 const contentBox = document.querySelector("#content");
-var isNoAudio = false;
-var recorder;
-var isRecording = false;
-var bitsPerSecond = 0;
-var isChrome = true; // used by RecordRTC
+var runtimePort = chrome.runtime.connect({
+    name: location.href.replace(/\/|:|#|\?|\$|\^|%|\.|`|~|!|\+|@|\[|\||]|\|*. /g, '').split('\n').join('').split('\r').join('')
+});
 
-var enableTabCaptureAPI = false;
-
-var enableScreen = true;
-var enableMicrophone = false;
-var enableCamera = false;
-var cameraStream = false;
-
-var enableSpeakers = true;
-
-var videoCodec = 'Default';
-var videoMaxFrameRates = '';
-
-var isRecordingVOD = false;
-var startedVODRecordedAt = (new Date).getTime();
-
-var videoPlayers = [];
 /**
  * Make the content box editable as soon as the user mouses over the sidebar.
 */
@@ -101,102 +83,18 @@ $( "#addScreenShot" ).click(function() {
 });
 
 $( "#addRecording" ).click(function() {
-    if (isRecordingVOD) {
-            stopVODRecording();
-            return;
-        }
-
-        if (recorder && recorder.streams) {
-            recorder.streams.forEach(function(stream, idx) {
-                stream.getTracks().forEach(function(track) {
-                    track.stop();
-                });
-
-                if (idx == 0 && typeof stream.onended === 'function') {
-                    stream.onended();
-                }
-            });
-            recorder.streams = null;
-            return;
-        }
-
-        chrome.browserAction.setIcon({
-            path: '../../icons/webnote.png'
+chrome.storage.sync.set({
+        enableTabCaptureAPI: 'false',
+        enableMicrophone: 'false',
+        enableCamera: 'false',
+        enableScreen: 'true', // TRUE
+        isRecording: 'true', // TRUE
+        enableSpeakers: 'true' // TRUE
+    }, function() {
+        runtimePort.postMessage({
+            messageFromContentScript1234: true,
+            startRecording: true
         });
+    });
 
-        if (enableTabCaptureAPI) {
-            captureTabUsingTabCapture();
-            return;
-        }
-
-        var screenSources = ['screen', 'window', 'audio'];
-
-        if (enableSpeakers === false) {
-            screenSources = ['screen', 'window'];
-        }
-
-    chrome.desktopCapture.chooseDesktopMedia(screenSources, onAccessApproved);
 });
-
-
-function onAccessApproved(chromeMediaSourceId, opts) {
-    if (!chromeMediaSourceId || !chromeMediaSourceId.toString().length) {
-        setDefaults();
-        chrome.runtime.reload();
-        return;
-    }
-
-    var constraints = {
-        audio: false,
-        video: {
-            mandatory: {
-                chromeMediaSource: 'desktop',
-                chromeMediaSourceId: chromeMediaSourceId
-            },
-            optional: []
-        }
-    };
-
-    if (videoMaxFrameRates && videoMaxFrameRates.toString().length) {
-        videoMaxFrameRates = parseInt(videoMaxFrameRates);
-
-        // 30 fps seems max-limit in Chrome?
-        if (videoMaxFrameRates /* && videoMaxFrameRates <= 30 */ ) {
-            constraints.video.maxFrameRate = videoMaxFrameRates;
-        }
-    }
-
-    constraints.video.mandatory.maxWidth = 3840;
-    constraints.video.mandatory.maxHeight = 2160;
-
-    constraints.video.mandatory.minWidth = 3840;
-    constraints.video.mandatory.minHeight = 2160;
-
-    if (opts.canRequestAudioTrack === true) {
-        constraints.audio = {
-            mandatory: {
-                chromeMediaSource: 'desktop',
-                chromeMediaSourceId: chromeMediaSourceId,
-                echoCancellation: true
-            },
-            optional: []
-        };
-    }
-
-    navigator.webkitGetUserMedia(constraints, function(stream) {
-        initVideoPlayer(stream);
-        gotStream(stream);
-    }, function(e) {console.log(e)});
-}
-
-
-function initVideoPlayer(stream) {
-    var videoPlayer = document.createElement('video');
-    videoPlayer.muted = !enableTabCaptureAPI;
-    videoPlayer.volume = !!enableTabCaptureAPI;
-    videoPlayer.src = URL.createObjectURL(stream);
-
-    videoPlayer.play();
-
-    videoPlayers.push(videoPlayer);
-}
