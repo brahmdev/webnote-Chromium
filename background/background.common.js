@@ -72,5 +72,5 @@ function getFileName(fileExtension) {
     var year = d.getUTCFullYear();
     var month = d.getUTCMonth();
     var date = d.getUTCDate();
-    return 'RecordRTC-' + year + month + date + '-' + getRandomString() + '.' + fileExtension;
+    return 'WebNote:' + year + "-" + month + "-" + date + '-' + getRandomString() + '.' + fileExtension;
 }

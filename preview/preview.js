@@ -20,7 +20,7 @@ function onGettingFile(f) {
     file = f;
 
     if (!file) {
-        header.querySelector('p').innerHTML = 'You did NOT record anything yet.';
+        header.querySelector('p').innerHTML = 'There is no recording present yet.';
         header.querySelector('span').innerHTML = '';
         return;
     }
@@ -39,22 +39,6 @@ function onGettingFile(f) {
     };
 }
 DiskStorage.GetRecentFile(onGettingFile);
-
-var btnUploadDropDown = document.querySelector('#btn-upload-dropdown');
-document.querySelector('#btn-upload').onclick = function(e) {
-    e.stopPropagation();
-
-    if (!file) {
-        alert('You have no recordings.');
-        return;
-    }
-
-    if (btnUploadDropDown.className === 'visible') {
-        btnUploadDropDown.className = '';
-    } else {
-        btnUploadDropDown.className = 'visible';
-    }
-};
 
 var btnRecordingsListDropDown = document.querySelector('#btn-recordings-list-dropdown');
 document.querySelector('#btn-recordings-list').onclick = function(e) {
@@ -76,10 +60,10 @@ document.querySelector('#btn-recordings-list').onclick = function(e) {
 
             fileNames.forEach(function(fName) {
                 var div = document.createElement('div');
-                div.innerHTML = '<img src="images/cross-icon.png" class="cross-icon">' + fName;
+                div.innerHTML = '<img src="images/delete.png" class="delete-icon">' + fName;
                 btnRecordingsListDropDown.appendChild(div);
 
-                div.querySelector('.cross-icon').onclick = function(e) {
+                div.querySelector('.delete-icon').onclick = function(e) {
                     e.preventDefault();
                     e.stopPropagation();
 
@@ -108,10 +92,6 @@ document.querySelector('#btn-recordings-list').onclick = function(e) {
 };
 
 document.body.onclick = function() {
-    if (btnUploadDropDown.className === 'visible') {
-        btnUploadDropDown.className = '';
-    }
-
     if (btnRecordingsListDropDown.className === 'visible') {
         btnRecordingsListDropDown.className = '';
     }

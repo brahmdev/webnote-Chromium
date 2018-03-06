@@ -53,14 +53,14 @@ header {
     overflow: hidden;
 }
 
-#btn-upload, #btn-recordings-list {
+#btn-recordings-list {
     float: right;
     height: 72px;
     margin-top: -3px;
     cursor: pointer;
 }
 
-#btn-upload-dropdown, #btn-recordings-list-dropdown {
+#btn-recordings-list-dropdown {
     display: none;
     position: absolute;
     top: 80px;
@@ -78,12 +78,12 @@ header {
   display: block!important;
 }
 
-#btn-upload-dropdown div, #btn-recordings-list-dropdown div {
+div, #btn-recordings-list-dropdown div {
   padding: 5px 10px;
   border-bottom: 1px dotted red;
 }
 
-#btn-upload-dropdown div:hover, #btn-recordings-list-dropdown div:hover {
+div:hover, #btn-recordings-list-dropdown div:hover {
   background: #F3F3F3;
 }
 
@@ -98,7 +98,7 @@ header {
   overflow: auto;
 }
 
-.cross-icon {
+.delete-icon {
     float: right;
     width: 22px;
     margin-left: 20px;
@@ -109,22 +109,13 @@ header {
 <title></title>
 <link rel="manifest" href="manifest.json">
 <header>
-    <img id="btn-recordings-list" src="images/list-icon.png" title="Upload">
-    <img id="btn-upload" src="images/upload-icon.png" title="Upload">
+    <img id="btn-recordings-list" src="images/list.png" title="List">
     <p>
         <a id="file-name" title="Download on your Disk!"></a>
         (Size: <span id="file-size"></span>)
-        <!--
-        Duration: <span id="file-duration">00:00</span>
-        -->
     </p>
     <span style="font-size: 17px">This file is in your <b>browser cache</b>. Click above link to <b>download</b>.</span>
 </header>
-
-<div id="btn-upload-dropdown">
-  <div id="btn-youtube-upload">Upload to YouTube</div>
-  <div id="btn-php-upload">Upload to PHP</div>
-</div>
 
 <div id="btn-recordings-list-dropdown"></div>
 
@@ -135,7 +126,5 @@ header {
 <script src="RecordRTC/DiskStorage.js"></script>
 <script src="background/background.common.js"></script>
 <script src="preview/preview.js"></script>
-<script src="preview/preview.php.upload.js"></script>
-<script src="preview/preview.youtube.upload.js"></script>
 
 <script src="https://apis.google.com/js/client:plusone.js"></script>

@@ -1,5 +1,3 @@
-// via: https://github.com/muaz-khan/RecordRTC/blob/master/dev/DiskStorage.js
-
 var DiskStorage = {
     init: function() {
         var self = this;

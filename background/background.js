@@ -57,7 +57,6 @@ function gotStream(stream) {
         });
     }
 
-    // fix https://github.com/muaz-khan/RecordRTC/issues/281
     options.ignoreMutedMedia = false;
 
     if (cameraStream && cameraStream.getVideoTracks().length) {
@@ -112,7 +111,6 @@ function gotStream(stream) {
     }
 
     initialTime = Date.now()
-    timer = setInterval(checkTime, 100);
 }
 
 function stopScreenRecording() {
@@ -139,11 +137,6 @@ function stopScreenRecording() {
         var file = new File([recorder ? recorder.blob : ''], getFileName(fileExtension), {
             type: mimeType
         });
-
-        // initialTime = initialTime || Date.now();
-        // var timeDifference = Date.now() - initialTime;
-        // var formatted = convertTime(timeDifference);
-        // file.duration = formatted;
 
         DiskStorage.StoreFile(file, function() {
             chrome.tabs.create({
