@@ -51,7 +51,7 @@ function gotStream(stream) {
     }
 
     if (cameraStream && cameraStream.getAudioTracks().length) {
-        cameraStream.getAudioTracks().forEach(function(track) {
+        cameraStream.getAudioTracks().forEach(function (track) {
             cameraStream.removeTrack(track);
             stream.addTrack(track);
         });
@@ -90,7 +90,7 @@ function gotStream(stream) {
     isRecording = true;
     //onRecording();
 
-    recorder.streams[0].onended = function() {
+    recorder.streams[0].onended = function () {
         if (recorder && recorder.streams.length) {
             recorder.streams[0].onended = null;
         }
@@ -99,8 +99,8 @@ function gotStream(stream) {
     };
 
     if (recorder.streams[0].getVideoTracks().length) {
-        recorder.streams[0].getVideoTracks().forEach(function(track) {
-            track.onended = function() {
+        recorder.streams[0].getVideoTracks().forEach(function (track) {
+            track.onended = function () {
                 if (!recorder) return;
                 var stream = recorder.streams[0];
                 if (!stream || typeof stream.onended !== 'function') return;
@@ -116,7 +116,7 @@ function gotStream(stream) {
 function stopScreenRecording() {
     isRecording = false;
 
-    recorder.stop(function() {
+    recorder.stop(function () {
         var mimeType = 'video/webm';
         var fileExtension = 'webm';
 
@@ -138,7 +138,7 @@ function stopScreenRecording() {
             type: mimeType
         });
 
-        DiskStorage.StoreFile(file, function() {
+        DiskStorage.StoreFile(file, function () {
             chrome.tabs.create({
                 url: 'preview.html'
             });
@@ -146,17 +146,17 @@ function stopScreenRecording() {
 
         // invokeSaveAsDialog(file, file.name);
 
-        setTimeout(function() {
+        setTimeout(function () {
             setDefaults();
             // chrome.runtime.reload();            
         }, 1000);
 
         try {
-            videoPlayers.forEach(function(player) {
+            videoPlayers.forEach(function (player) {
                 player.src = null;
             });
             videoPlayers = [];
-        } catch (e) {}
+        } catch (e) { }
 
         // for dropdown.js
         chrome.storage.sync.set({
@@ -164,21 +164,13 @@ function stopScreenRecording() {
         });
     });
 
-    if (timer) {
-        clearTimeout(timer);
-    }
-    setBadgeText('');
-
-    chrome.browserAction.setTitle({
-        title: 'Record Your Screen, Tab or Camera'
-    });
 }
 
 function setDefaults() {
 
     if (recorder && recorder.streams) {
-        recorder.streams.forEach(function(stream, idx) {
-            stream.getTracks().forEach(function(track) {
+        recorder.streams.forEach(function (stream, idx) {
+            stream.getTracks().forEach(function (track) {
                 track.stop();
             });
 
@@ -213,7 +205,7 @@ function setDefaults() {
 }
 
 function getUserConfigs() {
-    chrome.storage.sync.get(null, function(items) {
+    chrome.storage.sync.get(null, function (items) {
         if (items['bitsPerSecond'] && items['bitsPerSecond'].toString().length && items['bitsPerSecond'] !== 'default') {
             bitsPerSecond = parseInt(items['bitsPerSecond']);
         }
@@ -256,13 +248,13 @@ function getUserConfigs() {
 
         if (enableMicrophone || enableCamera) {
             if (!enableScreen) {
-                captureCamera(function(stream) {
+                captureCamera(function (stream) {
                     gotStream(stream);
                 });
                 return;
             }
 
-            captureCamera(function(stream) {
+            captureCamera(function (stream) {
                 cameraStream = stream;
                 captureDesktop();
             });

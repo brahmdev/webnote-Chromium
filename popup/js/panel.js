@@ -1,4 +1,5 @@
 var myWindowId;
+var screenShotImage;
 const contentBox = document.querySelector("#content");
 var runtimePort = chrome.runtime.connect({
     name: location.href.replace(/\/|:|#|\?|\$|\^|%|\.|`|~|!|\+|@|\[|\||]|\|*. /g, '').split('\n').join('').split('\r').join('')
@@ -9,21 +10,6 @@ var runtimePort = chrome.runtime.connect({
 */
 window.addEventListener("mouseover", () => {
     contentBox.setAttribute("contenteditable", true);
-});
-
-/**
- * When the user mouses out, save the current contents of the box.
-*/
-window.addEventListener("mouseout", () => {
-    contentBox.setAttribute("contenteditable", false);
-    chrome.tabs.query({
-        windowId: myWindowId,
-        active: true
-    }, function(tabs) {
-        let contentToStore = {};
-            contentToStore[tabs[0].url] = contentBox.textContent;
-            chrome.storage.local.set(contentToStore);
-    });
 });
 
 /**
@@ -39,8 +25,27 @@ function updateContent() {
         active: true
     }, function(tabs) {
         chrome.storage.local.get(null, function(result) {
-            var dataMap = result[Object.keys(result)];
-            contentBox.textContent = result[tabs[0].url];
+            console.log("in updatecontent: ", result, " : ", result[tabs[0].url]);
+            //console.log(result[tabs[0].url].note);
+            if(result[tabs[0].url] !== undefined) {
+                contentBox.textContent = result[tabs[0].url].note;
+            } else {
+                contentBox.textContent = '';
+            }
+            if(result[tabs[0].url] !== undefined && result[tabs[0].url].screenShot !== undefined && result[tabs[0].url].screenShot !== '') {
+                var oImg = document.createElement("img");
+                oImg.setAttribute('src', result[tabs[0].url].screenShot);
+                oImg.setAttribute('alt', 'capture-1');
+                oImg.setAttribute('height', '80px');
+                oImg.setAttribute('width', '80px');
+                oImg.setAttribute('style', 'margin:10px; border: 1px solid #ccc;');
+
+                var screenShotAttachment = document.getElementById("screenShotAttachment");
+                while (screenShotAttachment.firstChild) {
+                    screenShotAttachment.removeChild(screenShotAttachment.firstChild);
+                }
+                screenShotAttachment.appendChild(oImg);    
+            }
         });
 
     });
@@ -69,17 +74,50 @@ chrome.windows.getCurrent(function(win) {
 
 $( "#addScreenShot" ).click(function() {
   chrome.tabs.captureVisibleTab(null, {}, function (image) {
-     // You can add that image HTML5 canvas, or Element.
-     var oImg = document.createElement("img");
-     oImg.setAttribute('src', image);
-     oImg.setAttribute('alt', 'capture-1');
-     oImg.setAttribute('height', '80px');
-     oImg.setAttribute('width', '80px');
-     oImg.setAttribute('style', 'margin:10px; border: 1px solid #ccc;');
+    chrome.tabs.query({
+        windowId: myWindowId,
+        active: true
+    }, function(tabs) {
+        screenShotImage = image;
 
-     var screenShotAttachment = document.getElementById("screenShotAttachment");
-     screenShotAttachment.appendChild(oImg);
+        var oImg = document.createElement("img");
+        oImg.setAttribute('src', screenShotImage);
+        oImg.setAttribute('alt', 'capture-1');
+        oImg.setAttribute('height', '80px');
+        oImg.setAttribute('width', '80px');
+        oImg.setAttribute('style', 'margin:10px; border: 1px solid #ccc;');
+
+        var screenShotAttachment = document.getElementById("screenShotAttachment");
+        while (screenShotAttachment.firstChild) {
+            screenShotAttachment.removeChild(screenShotAttachment.firstChild);
+        }
+        screenShotAttachment.appendChild(oImg); 
+    });// You can add that image HTML5 canvas, or Element.
+    
   });
+});
+$( "#saveData" ).click(function() {
+    chrome.tabs.query({
+        windowId: myWindowId,
+        active: true
+    }, function(tabs) {
+      
+        chrome.storage.local.get(null, function(result) {
+            let contentToStore = {};
+            let content = {};
+            content.note = contentBox.textContent;
+            content.screenShot = screenShotImage;
+            contentToStore[tabs[0].url] = content;
+           // delete result[tabs[0].url];
+            chrome.storage.local.set(contentToStore);
+        });
+
+        chrome.storage.local.get(null, function(result) {
+            console.log(result);
+        });
+        
+    });
+    
 });
 
 $( "#addRecording" ).click(function() {
@@ -98,3 +136,22 @@ chrome.storage.sync.set({
     });
 
 });
+
+//DiskStorage.GetRecentFile(onGettingFile);
+
+function onGettingFile(f) {
+    file = f;
+
+    if (!file) {
+        header.querySelector('p').innerHTML = 'There is no recording present yet.';
+        header.querySelector('span').innerHTML = '';
+        return;
+    }
+
+    var recordingLink = document.createElement("a");
+    recordingLink.setAttribute('download', file.download);
+    recordingLink.setAttribute('innerHTML', file.name);
+    recordingLink.setAttribute('href', URL.createObjectURL(file));
+    debugger;
+    document.getElementById("recordings").appendChild(recordingLink);
+}
