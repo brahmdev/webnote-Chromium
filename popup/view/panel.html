@@ -1,51 +1,68 @@
 <!DOCTYPE html>
 
 <html>
+
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../css/panel.css"/>
-    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/panel.css" />
 </head>
 
 <body>
-<div id="home">
-    <div id="header">
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link navbar-brand active" href="#">WebNote</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" id="addScreenShot">Add Screenshot</a>
-            </li>
-            <li class="nav-item disabled">
-                <a class="nav-link" href="#" id="addRecording">Add Recording</a>
-            </li>
-        </ul>
-    </div>
+    <div id="home">
+        <div id="header">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link navbar-brand active" href="#">WebNote</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="addScreenShot">Add Screenshot</a>
+                </li>
+                <li class="nav-item disabled">
+                    <a class="nav-link" href="#" id="addRecording">Add Recording</a>
+                </li>
+            </ul>
+        </div>
+        <div class="body">
+            <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home"
+                        aria-selected="true">Add Note/ScreenShot</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile"
+                        aria-selected="false">Add Recordings</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">Tab1</div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">Tab2</div>
+            </div>
+        </div>
+        <div id="content">
 
-    <div id="content">
+        </div>
 
-    </div>
+        <div id="attachments">
+            <div id="screenShotAttachment">
+            </div>
+        </div>
 
-    <div id="attachments">
-        <div id="screenShotAttachment">
+        <div id="recordings">
+
+        </div>
+
+        <div id="footer">
+            <input type="button" id="saveData" value="Save">
         </div>
     </div>
-
-    <div id="recordings">
-        
-    </div>
-
-    <div id="footer">
-        <input type="button" id="saveData" value="Save">
-    </div>
-</div>
-<p>Click inside the box to start taking notes on this page.</p>
-<script src="../js/jquery-3.3.1.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../../RecordRTC/DiskStorage.js"></script>
-<script src="../../background/background.common.js"></script>
-<script src="../js/panel.js"></script>
+    <p>Click inside the box to start taking notes on this page.</p>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../../RecordRTC/DiskStorage.js"></script>
+    <script src="../../background/background.common.js"></script>
+    <script src="../js/panel.js"></script>
 </body>
 
 </html>

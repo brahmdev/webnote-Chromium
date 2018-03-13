@@ -35,3 +35,18 @@ p {
 .nav {
     background-color: #f8f9fa!important;
 }
+
+.body .nav-item {
+  width: 50%;
+}
+
+.body .nav-link {
+  color: #333 !important;
+  text-align: center;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+}
+.body .nav-link.active {
+  border-bottom: 2px solid #8e5bf6 !important;
+}
+
