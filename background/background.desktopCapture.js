@@ -37,7 +37,6 @@ function onAccessApproved(chromeMediaSourceId, opts) {
         chrome.runtime.reload();
         return;
     }
-	console.log("in on access");
     var constraints = {
         audio: false,
         video: {

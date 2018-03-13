@@ -44,6 +44,8 @@ function updateContent() {
                 while (screenShotAttachment.firstChild) {
                     screenShotAttachment.removeChild(screenShotAttachment.firstChild);
                 }
+
+                screenShotImage = result[tabs[0].url].screenShot;
                 screenShotAttachment.appendChild(oImg);    
             }
         });
