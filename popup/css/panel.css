@@ -18,9 +18,15 @@ p {
 
 #content {
   height: 170px;
-  width: 100%;
-  border: .5em solid #DDE4E9;
+  width: 75%;
+  border: 3px solid #DDE4E9;
   transition: background-color .2s ease-out;
+}
+
+.webnote-row {
+ display: -webkit-box;
+ margin-right: 0px;
+ margin-left: 0px;
 }
 
 #content[contenteditable=true] {
@@ -48,5 +54,13 @@ p {
 }
 .body .nav-link.active {
   border-bottom: 2px solid #8e5bf6 !important;
+}
+
+label {
+  margin-left: 10px;
+}
+
+.right-content {
+  margin-left: 20px;
 }
 

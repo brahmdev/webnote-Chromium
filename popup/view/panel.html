@@ -16,12 +16,6 @@
                 <li class="nav-item">
                     <a class="nav-link navbar-brand active" href="#">WebNote</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="addScreenShot">Add Screenshot</a>
-                </li>
-                <li class="nav-item disabled">
-                    <a class="nav-link" href="#" id="addRecording">Add Recording</a>
-                </li>
             </ul>
         </div>
         <div class="body">
@@ -36,28 +30,45 @@
                 </li>
             </ul>
             <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">Tab1</div>
-                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">Tab2</div>
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <form>
+                        <div class="form-group row webnote-row">
+                            <label for="content" class="col-sm-2 col-form-label">Content:</label>
+                            <div id="content" class="right-content"></div>
+                        </div>
+                        <div class="form-group row webnote-row">
+                            <label for="attachments">Attachment:</label>
+                            <div id="attachments" class="right-content">
+                                <div id="screenShotAttachment">
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-success" id="addScreenShot" style="margin-left: 5px;">Click to Add Attachment</button>
+                        </div>
+                    </form>
+
+                    <div style="margin-top:25px;">
+                        <button type="button" class="btn btn-primary btn-lg btn-block" id="saveData">Save</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="clear">Cancel</button>
+                    </div>
+
+                    <p>Click inside the box to start taking notes on this page.</p>
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <button type="button" class="btn btn-primary btn-lg btn-block" id="addRecording">Add Recording</button>
+                    <div id="recordings">
+
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="content">
 
-        </div>
 
-        <div id="attachments">
-            <div id="screenShotAttachment">
-            </div>
-        </div>
-
-        <div id="recordings">
-
-        </div>
 
         <div id="footer">
-            <input type="button" id="saveData" value="Save">
+
         </div>
     </div>
-    <p>Click inside the box to start taking notes on this page.</p>
+
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../../RecordRTC/DiskStorage.js"></script>

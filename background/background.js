@@ -2,6 +2,11 @@ chrome.storage.sync.set({
     isRecording: 'false' // FALSE
 });
 
+chrome.runtime.onInstalled.addListener(function (details) {
+    localStorage.setItem("key", "value");
+});
+
+
 function gotStream(stream) {
     var options = {
         type: 'video',
