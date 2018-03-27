@@ -6,10 +6,12 @@ This add-on adds a popup that lets allows you take notes on the current web page
 
 ## What is new
 
-1) Sidebar converted to Popup in this release.
-2) Support to Firefox & Chrome browser Added in this release
+1) ScreenShot capturing & Add Recording feture added
+2) UI Upgrade
 
 
 ## Future Enhancement
 
-There should be way to add see all my web-note in single html page with link to their web pages and possibility to open them in new tab.
+1) New look and feel for firefox browser as well
+2) Add ScreenShot feature for Firefox
+3) Show all recrodings page Look and feel upgrade
